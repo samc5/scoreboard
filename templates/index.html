@@ -5,7 +5,7 @@
     {{ turbo()}}
 </head>
 <body>
-    <h3>Balls: {{balls}}</h3>
+    <!-- <h3>Balls: {{balls}}</h3>
     <h3>Strikes: {{strikes}}</h3>
     <h3>Outs: {{outs}}</h3>
     <h3>Inning: {{inning}}</h3>
@@ -14,10 +14,9 @@
     <h3>Away: {{away}}</h3>
     <h3>Pitcher: {{pitcher_first}} {{pitcher_last}}</h3>
     <h3>Batter: {{batter_first}} {{batter_last}}</h3>
-    <h3>Bases: {{base_text}}</h3>
-
-
-
+    <h3>Bases: {{base_text}}</h3> -->
+    {% include "scoreboard.html" %}
+    {% block content %}{% endblock %}
 
     <p style="text-align:center;">
         <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FHoboken%2Fvideos%2F3151469491810690&width=1300&show_text=false&height=413&appId" width="1300" height="1000" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>   </p>
