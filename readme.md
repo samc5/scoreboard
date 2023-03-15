@@ -1,1 +1,2 @@
-# My attempt at creating a live updating scoreboard to go along with Peglegs baseball facebook live streams
+# Live Updating Scoreboard website for Peglegs Baseball Games
+## Fans can watch the livestream and look at the score in the same place
