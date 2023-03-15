@@ -1,12 +1,171 @@
 <div id="sb" class="sb">
-    <h3>Balls: {{balls}}</h3>
-    <h3>Strikes: {{strikes}}</h3>
-    <h3>Outs: {{outs}}</h3>
-    <h3>Inning: {{inning}}</h3>
-    <h3>Half: {{half}}</h3>
-    <h3>Home: {{home}}</h3>
-    <h3>Away: {{away}}</h3>
-    <h3>Pitcher: {{pitcher_first}} {{pitcher_last}}</h3>
-    <h3>Batter: {{batter_first}} {{batter_last}}</h3>
-    <h3>Bases: {{base_text}}</h3>
+    <!-- <div width="25" class="inningStatestyle__StyledBasepathsWrapper-sc-ywgvyn-1 cWZMSf"><svg class="basepathsstyle__StyledBaseSVG-sc-9dvd8i-0 cYQmSO" width="25" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 16.25" aria-label="No runners on base"><title>No runners on base</title><rect class="basepathsstyle__BaseRect-sc-9dvd8i-1 grvtsK" fill="#888888" stroke-width="1" stroke="#888888" width="6" height="6" transform="translate(5, 7.25) rotate(-315)" rx="1px" ry="1px"></rect><rect class="basepathsstyle__BaseRect-sc-9dvd8i-1 grvtsK" fill="#888888" stroke-width="1" stroke="#888888" width="6" height="6" transform="translate(12, 0.5) rotate(-315)" rx="1px" ry="1px"></rect><rect class="basepathsstyle__BaseRect-sc-9dvd8i-1 grvtsK" fill="#888888" stroke-width="1" stroke="#888888" width="6" height="6" transform="translate(19, 7.25) rotate(-315)" rx="1px" ry="1px"></rect></svg></div> -->
+    <p style="text-align:center">
+    <section class="game" style="text-align:center">
+        <div class="score-board" style="background-color:#DE3163">
+          <div class="player home">
+            <h4>Home</h4>
+            <div class="score-box">{{home}}</div>
+          </div>
+          <div class="player away">
+            <h4>Away</h4>
+            <div class="score-box">{{away}}</div>
+          </div>
+          <div class="game-info">
+            <p>Count: {{balls}}-{{strikes}}</p>
+            <!-- Move this part down -->
+            <p style="margin-top:10px;">Outs: {{outs}}</p>
+            <!-- End of moving part -->
+          </div>
+          <!-- Add this part for the bases -->
+    <div width="100" class="inningStatestyle__StyledBasepathsWrapper-sc-ywgvyn-1 cWZMSf"><svg
+        class= "basepathsstyle__StyledBaseSVG-sc-9dvd8i-0 cYQmSO"
+        width= "100"
+        role= "img"
+        xmlns= "http://www.w3.org/2000/svg"
+        viewBox= "0 0 24 16.25"
+        aria-label= "No runners on base"><title>No runners on base</title><rect
+          class = "basepathsstyle__BaseRect-sc-9dvd8i-1 grvtsK"
+          fill = "{{base_colors[2]}}"
+          stroke-width = "1"
+          stroke = "{{base_colors[2]}}"
+          width = "6"
+          height = "6"
+          transform = "translate(5,7.25) rotate(-315)"
+          rx = "1 px"
+          ry = "1 px"></rect><rect
+            class = "basepathsstyle__BaseRect-sc-9dvd8i-1 grvtsK"
+            fill = "{{base_colors[1]}}"
+            stroke-width = "1"
+            stroke = "{{base_colors[1]}}"
+            width ="6 "
+            height ="6 "
+            transform ="translate(12 ,0.5 ) rotate(-315)"
+            rx ="1 px "
+            ry ="1 px "></rect><rect
+              class ="basepathsstyle__BaseRect-sc -9dvd8i -1 grvtsK "
+              fill ="{{base_colors[0]}}"
+              stroke-width ="1 "
+              stroke ="{{base_colors[0]}}"
+              width ="6 "
+              height ="6 "
+              transform ="translate(19 ,7.25 ) rotate(-315)"
+              rx ="1 px "
+              ry ="1 px "></rect></svg></div>
+
+    <!-- End of bases part -->
+          <!-- Add this part for the pitcher-batter table -->
+          <table style="width:100px; border-collapse:collapse; margin-left:10px;">
+            <tr style="height:50px;">
+              <td style="border:2px solid black; text-align:center; font-size:20px; font-weight:bold;">Pitcher: {{pitcher_last}}</td>
+            </tr>
+            <tr style="height:50px;">
+              <td style="border:2px solid black; text-align:center; font-size:20px; font-weight:bold;">Batter: {{batter_last}}</td>
+            </tr>
+          </table>
+      
+          <!-- End of pitcher-batter table -->
+          <div class="inning-box">
+            <p>{{inning}}</p>
+            <div class="triangle"></div>
+          </div>
+        </div>
+      
+      <style>
+      
+      .game {
+        display: grid;
+        grid-template-columns: repeat(2, auto);
+      }
+      
+      .score-board {
+  display: grid;
+  grid-template-columns: repeat(6, auto); /* Change this to accommodate the table */
+  border: 5px solid #00008B; /* Add this to create a white border around the scoreboard */
+  margin: 2 auto;
+}
+      
+      .player {
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .player h4 {
+       font-size :18 px ; /* Change this to make it smaller */
+       font-weight :bold ; 
+       margin-bottom :-10 px ; 
+      }
+      
+      .score-box {
+       width :80 px ; /* Change this to make it smaller */
+       height :80 px ; /* Change this to make it smaller */
+       border :3 px solid black ;
+       text-align :center ; 
+       line-height :80 px ; /* Change this to match the height */
+       font-size :40 px ; 
+       font-weight :bold ; 
+      }
+      
+      .game-info {
+       display:flex; 
+       flex-direction:column; 
+       align-items:center;  
+       justify-content:center;
+      }
+      
+      .game-info p {
+       margin-top:-10px;  
+       margin-bottom:-10px;
+       font-size:30px;
+       font-weight:bold;
+      }
+      
+      .inning-box {
+       display:flex; 
+       flex-direction:column;  
+       align-items:center;
+       justify-content:center;
+       position: relative;
+      }
+      
+      .inning-box p {
+       margin-top:-10px;  
+       margin-bottom:-10px;
+       font-size:30px;
+       font-weight:bold;
+      }
+      
+      .triangle {
+       position: absolute;
+       top: -10px;
+       left: calc(50% - 10px);
+       width :0 ;  
+       height :0 ;  
+       border-left :15 px solid transparent ;  
+       border-right :15 px solid black ;   
+       border-bottom :15 px solid black ;/* change to border-top for bottom of inning */
+      }
+        
+      /* Add this part for the bases */
+      
+/* Add this part for the bases */
+
+.inningStatestyle__StyledBasepathsWrapper-sc-ywgvyn-1 cWZMSf{
+ position:relative ;
+ right :0 ;
+ top :-50 % ; /* Change this to move them down a tiny bit */
+ width :100 px ;
+}
+.basepathsstyle__StyledBaseSVG-sc-9dvd8i-0 cYQmSO{
+ width :100 px ;
+}
+.basepathsstyle__BaseRect-sc-9dvd8i-1 grvtsK{
+ fill :#888888 ;
+ stroke-width :1 px ;
+ stroke :#888888 ;
+}
+        
+      </style>
+      </section>
+      </p>
 </div>

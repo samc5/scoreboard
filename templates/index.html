@@ -16,9 +16,17 @@
     <h3>Batter: {{batter_first}} {{batter_last}}</h3>
     <h3>Bases: {{base_text}}</h3> -->
     {% include "scoreboard.html" %}
-    {% block content %}{% endblock %}
-
+    {% block content %}{% endblock %}    
     <p style="text-align:center;">
-        <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FHoboken%2Fvideos%2F3151469491810690&width=1300&show_text=false&height=413&appId" width="1300" height="1000" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>   </p>
-   </body>
-    </html>
+    <iframe src="{{stream}}" width="1100" height="1000" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>   </p>
+    <br><br><br><br><br><br><br>
+    <p> admin stuff (IGNORE)</p>
+    <form action="/input2" method="post">
+        <input type="text" name = "game" placeholder="game">
+        <br>
+        <input type="text" name = "stream" placeholder="stream">
+        <input type="text" name="code" placeholder="code">
+        <input type="submit" class="enter data" value="submit">
+    </form>
+    </body>
+</html>
