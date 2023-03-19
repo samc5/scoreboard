@@ -96,6 +96,9 @@ def display():
     stream_file.close()
     return render_template("index.html", stream = stream_url)
 
+@app.route("/admin")
+def adminStuff():
+    return render_template("form.html")
 @app.route("/input2", methods = ["POST", "GET"])
 def display2():
     game = request.form["game"]
