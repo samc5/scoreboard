@@ -3,8 +3,9 @@ import json
 from humanize import number
 import threading
 import time
-from flask import Flask, render_template, request, Response, session, redirect
+from flask import Flask, render_template, request, Response, session, redirect, jsonify
 from turbo_flask import Turbo
+
 
 app = Flask(__name__)
 turbo = Turbo(app)
@@ -86,7 +87,59 @@ def requester():
     print(base_colors)
     return {'base_colors':base_colors,'base_text':base_text, 'home':home_score,'away':away_score,'half':half_inning,'inning':inning,'balls':balls,'strikes':strikes,'outs':outs,'pitcher_first':pitcher_first,'pitcher_last':pitcher_last,'batter_first':batter_first,'batter_last':batter_last}
 
+@app.route("/scoreboard")
+def scoreboard():
+    game_file = open("game.txt", "r")
+    game_url = game_file.read()
+    game_file.close()
 
+    #url = "https://push.gamechanger.io/push/game/64066eb0d12b5e9d6600000c/stream/64066eb0d12b5e9de2000010?index=0&sabertooth_aware=true"
+    r = requests.get(game_url)
+    data = r.json()
+    #print(data['game']['accounts'][0])
+
+
+    home_score = data['game']['accounts'][0]['scores'][0]['score']
+    away_score = data['game']['accounts'][0]['scores'][1]['score']
+
+    balls = data['game']['accounts'][0]['state']['count']['balls']
+    strikes = data['game']['accounts'][0]['state']['count']['strikes']
+    outs = data['game']['accounts'][0]['state']['count']['outs']
+
+    inning = data['game']['accounts'][0]['state']['inning']
+    inning_suffix = number.ordinal(inning)
+
+    pitcher_first = "No pitcher"
+    pitcher_last = "No pitcher"
+    batter_first = "No batter"
+    batter_last = "No batter"
+
+    json_string = json.dumps(data)
+    data = json.loads(json_string)
+    if data['game']['accounts'][0]['state']['pitcher'] != None:
+        pitcher_first = data['game']['accounts'][0]['state']['pitcher']['first_name']
+        pitcher_last = data['game']['accounts'][0]['state']['pitcher']['last_name']
+    if data['game']['accounts'][0]['state']['batter'] != None:
+        batter_first = data['game']['accounts'][0]['state']['batter']['first_name']
+        batter_last = data['game']['accounts'][0]['state']['batter']['last_name']
+
+    base_array = [0,0,0]
+    bases_unclear = data['game']['accounts'][0]['state']['bases']
+    
+    for i in bases_unclear:
+        base = i["base"]
+        base_last = i["player"]["last_name"]
+        base_array[base-1] = 1
+    base_text = check_bases(base_array)
+    base_colors = color_bases(base_array)
+    half = data['game']['accounts'][0]['state']['half']
+    if half == 0:
+        half_inning = "top"
+    else:
+        half_inning = "bottom"
+    print(base_colors)
+    dic =  {'base_colors':base_colors,'base_text':base_text, 'home':home_score,'away':away_score,'half':half_inning,'inning':inning,'balls':balls,'strikes':strikes,'outs':outs,'pitcher_first':pitcher_first,'pitcher_last':pitcher_last,'batter_first':batter_first,'batter_last':batter_last}
+    return jsonify(dic)
 
 @app.route("/", methods = ["POST", "GET"])
 def display():
@@ -115,16 +168,9 @@ def display2():
     #time.sleep(2)
     return redirect("/")
 
-def update_load():
-    with app.app_context():
-        while True:
-            time.sleep(5)
-            turbo.push(turbo.replace(render_template('scoreboard.html'), 'sb'))
 
-th = threading.Thread(target=update_load)
-th.daemon = True
-th.start()
 
-# if __name__ == "__main__":
-#     app.debug = True
-#     app.run()
+
+if __name__ == "__main__":
+    app.debug = True
+    app.run()
