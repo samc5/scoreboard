@@ -5,7 +5,7 @@ import threading
 import time
 from flask import Flask, render_template, request, Response, session, redirect, jsonify
 from turbo_flask import Turbo
-
+import tester2
 
 app = Flask(__name__)
 turbo = Turbo(app)
@@ -39,7 +39,6 @@ def requester():
     game_file = open("game.txt", "r")
     game_url = game_file.read()
     game_file.close()
-
     #url = "https://push.gamechanger.io/push/game/64066eb0d12b5e9d6600000c/stream/64066eb0d12b5e9de2000010?index=0&sabertooth_aware=true"
     r = requests.get(game_url)
     data = r.json()
@@ -92,7 +91,6 @@ def scoreboard():
     game_file = open("game.txt", "r")
     game_url = game_file.read()
     game_file.close()
-
     #url = "https://push.gamechanger.io/push/game/64066eb0d12b5e9d6600000c/stream/64066eb0d12b5e9de2000010?index=0&sabertooth_aware=true"
     r = requests.get(game_url)
     data = r.json()
@@ -157,7 +155,6 @@ def display2():
     game = request.form["game"]
     stream = request.form["stream"]
     code = request.form["code"]
-    #print(f'Game: {game}, stream: {stream}')
     if code == "3007":
         stream_file = open("stream.txt", "w")
         stream_file.write(f'{stream}')
@@ -168,8 +165,16 @@ def display2():
     #time.sleep(2)
     return redirect("/")
 
+@app.route("/input3", methods = ["POST", "GET"])
+def display3():
+    ig = request.form["ig"]
+    game2_file = open("game2.txt", "w")
+    game2_file.write(f'{ig}')
+    game2_file.close()
 
-
+    #url = tester2.getGameURL()
+    #time.sleep(10)
+    return redirect("/")
 
 if __name__ == "__main__":
     app.debug = True
